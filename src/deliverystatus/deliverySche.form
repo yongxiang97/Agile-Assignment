@@ -2,41 +2,20 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.persistence.EntityManager" name="deliverySchedulePUEntityManager">
-      <Properties>
-        <Property name="persistenceUnit" type="java.lang.String" value="deliverySchedulePU"/>
-      </Properties>
-    </Component>
-    <Component class="javax.persistence.Query" name="deliverystatus_1Query">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT d FROM Deliverystatus_1 d"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="deliverySchedulePUEntityManager"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="java.util.List" name="deliverystatus_1List">
       <Properties>
         <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="deliverystatus_1Query"/>
+          <ComponentRef name="default"/>
         </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;deliverystatus.Deliverystatus_1&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.persistence.Query" name="dscheduleQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT d FROM Dschedule d"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="deliverySchedulePUEntityManager"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="java.util.List" name="dscheduleList">
       <Properties>
         <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="dscheduleQuery"/>
+          <ComponentRef name="default"/>
         </Property>
       </Properties>
       <AuxValues>

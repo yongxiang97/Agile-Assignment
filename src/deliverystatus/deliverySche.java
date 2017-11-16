@@ -34,11 +34,8 @@ public class deliverySche extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        deliverySchedulePUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("deliverySchedulePU").createEntityManager();
-        deliverystatus_1Query = java.beans.Beans.isDesignTime() ? null : deliverySchedulePUEntityManager.createQuery("SELECT d FROM Deliverystatus_1 d");
-        deliverystatus_1List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : deliverystatus_1Query.getResultList();
-        dscheduleQuery = java.beans.Beans.isDesignTime() ? null : deliverySchedulePUEntityManager.createQuery("SELECT d FROM Dschedule d");
-        dscheduleList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : dscheduleQuery.getResultList();
+        deliverystatus_1List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : ((javax.persistence.Query)null).getResultList();
+        dscheduleList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : ((javax.persistence.Query)null).getResultList();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -176,11 +173,8 @@ public class deliverySche extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.persistence.EntityManager deliverySchedulePUEntityManager;
     private java.util.List<deliverystatus.Deliverystatus_1> deliverystatus_1List;
-    private javax.persistence.Query deliverystatus_1Query;
     private java.util.List<deliverystatus.Dschedule> dscheduleList;
-    private javax.persistence.Query dscheduleQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
