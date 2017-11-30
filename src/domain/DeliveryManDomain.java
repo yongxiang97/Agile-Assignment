@@ -6,9 +6,7 @@ import java.util.Objects;
 public class DeliveryManDomain implements Serializable{
     private String DMid;
     private String DMname;
-    private String DMdeliveryarea;
     private String DMic;
-    private String DMage;
     private String DMgender;
     private String DMphone;
     private String DMemail;
@@ -23,12 +21,10 @@ public class DeliveryManDomain implements Serializable{
         this.DMid = DMid;
     }
     
-    public DeliveryManDomain(String DMid, String DMname, String DMdeliveryarea, String DMic, String DMage, String DMgender, String DMphone, String DMemail, String DMaccpass, String DMAddress){
+    public DeliveryManDomain(String DMid, String DMname, String DMic, String DMgender, String DMphone, String DMemail, String DMaccpass, String DMAddress){
         this.DMid = DMid;
         this.DMname = DMname;
-        this.DMdeliveryarea = DMdeliveryarea;
         this.DMic = DMic;
-        this.DMage = DMage;
         this.DMgender = DMgender;
         this.DMphone = DMphone;
         this.DMemail = DMemail;
@@ -44,17 +40,11 @@ public class DeliveryManDomain implements Serializable{
         return DMname;
     }
 
-    public String getDMdeliveryarea() {
-        return DMdeliveryarea;
-    }
 
     public String getDMic() {
         return DMic;
     }
 
-    public String getDMage() {
-        return DMage;
-    }
 
     public String getDMgender() {
         return DMgender;
@@ -84,17 +74,11 @@ public class DeliveryManDomain implements Serializable{
         this.DMname = DMname;
     }
 
-    public void setDMdeliveryarea(String DMdeliveryarea) {
-        this.DMdeliveryarea = DMdeliveryarea;
-    }
 
     public void setDMic(String DMic) {
         this.DMic = DMic;
     }
 
-    public void setDMage(String DMage) {
-        this.DMage = DMage;
-    }
 
     public void setDMgender(String DMgender) {
         this.DMgender = DMgender;
