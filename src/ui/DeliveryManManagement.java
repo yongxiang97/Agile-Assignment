@@ -1,50 +1,68 @@
 package ui;
 
-import control.DeliveryManControl;
 import domain.DeliveryManDomain;
-import da.DeliveryManDA;
 import javax.swing.*;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+
 /**
  *
  * @author annoy
  */
 class JTextFieldLimit extends PlainDocument {
-  private int limit;
-  JTextFieldLimit(int limit) {
-    super();
-    this.limit = limit;
-  }
 
-  JTextFieldLimit(int limit, boolean upper) {
-    super();
-    this.limit = limit;
-  }
+    private int limit;
 
-  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
-    if (str == null)
-      return;
-
-    if ((getLength() + str.length()) <= limit) {
-      super.insertString(offset, str, attr);
+    JTextFieldLimit(int limit) {
+        super();
+        this.limit = limit;
     }
-  }
+
+    JTextFieldLimit(int limit, boolean upper) {
+        super();
+        this.limit = limit;
+    }
+
+    public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+        if (str == null) {
+            return;
+        }
+
+        if ((getLength() + str.length()) <= limit) {
+            super.insertString(offset, str, attr);
+        }
+    }
 }
+
+
+
 public class DeliveryManManagement extends javax.swing.JFrame {
- 
-    private DeliveryManControl Deliverycontrol;
-    private DeliveryManDA DMDA = new DeliveryManDA();
+    
+    public void clearText(){
+        jtfAddress.setText("");
+        jtfName.setText("");
+        jtfIC.setText("");
+        jtfPhone.setText("");
+        jtfEmail.setText("");
+        jtfAccPw.setText("");
+        jtfSearch.setText("");
+        jtfSearch.requestFocusInWindow();
+    }
+
+    public static ListInterface<DeliveryManDomain> DmanList = new DeliveryManList<>();
+
     public DeliveryManManagement() {
-        Deliverycontrol = new DeliveryManControl();
+
+        DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium");
+        DmanList.add(test1);
+        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6666", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium");
+        DmanList.add(test2);
+
         initComponents();
         setTitle("Delivery Man Management");
-        jtfDeliveryArea.setDocument(new JTextFieldLimit(30));
         jtfName.setDocument(new JTextFieldLimit(30));
         jtfIC.setDocument(new JTextFieldLimit(14));
-        jtfAge.setDocument(new JTextFieldLimit(3));
-        jtfGender.setDocument(new JTextFieldLimit(1));
         jtfPhone.setDocument(new JTextFieldLimit(11));
         jtfEmail.setDocument(new JTextFieldLimit(30));
         jtfAccPw.setDocument(new JTextFieldLimit(29));
@@ -60,18 +78,14 @@ public class DeliveryManManagement extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupAge = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jtfDeliveryArea = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jtfIC = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jtfAge = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jtfGender = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jtfPhone = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -82,6 +96,13 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         jtfName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jtfAddress = new javax.swing.JTextField();
+        BtnUpdate = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jtfSearch = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        BtnSearch = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -97,55 +118,33 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Name:");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(12, 13, 40, 17);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Delivery Area:");
-        jPanel2.add(jLabel5);
-        jLabel5.setBounds(10, 40, 85, 17);
-
-        jtfDeliveryArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfDeliveryAreaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jtfDeliveryArea);
-        jtfDeliveryArea.setBounds(120, 40, 220, 25);
+        jLabel4.setBounds(10, 10, 40, 17);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("IC:");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(10, 70, 18, 17);
+        jLabel6.setBounds(10, 40, 18, 17);
         jPanel2.add(jtfIC);
-        jtfIC.setBounds(120, 70, 220, 25);
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Age:");
-        jPanel2.add(jLabel7);
-        jLabel7.setBounds(10, 100, 28, 17);
-        jPanel2.add(jtfAge);
-        jtfAge.setBounds(120, 100, 220, 25);
+        jtfIC.setBounds(120, 40, 220, 25);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Gender:");
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(10, 130, 49, 17);
-        jPanel2.add(jtfGender);
-        jtfGender.setBounds(120, 130, 220, 25);
+        jLabel8.setBounds(10, 70, 49, 17);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Phone:");
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(10, 160, 44, 17);
+        jLabel9.setBounds(10, 100, 44, 17);
         jPanel2.add(jtfPhone);
-        jtfPhone.setBounds(120, 160, 220, 25);
+        jtfPhone.setBounds(120, 100, 220, 25);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Email:");
         jPanel2.add(jLabel10);
-        jLabel10.setBounds(10, 190, 36, 17);
+        jLabel10.setBounds(10, 130, 36, 17);
         jPanel2.add(jtfAccPw);
-        jtfAccPw.setBounds(120, 220, 220, 25);
+        jtfAccPw.setBounds(120, 160, 220, 25);
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("Add");
@@ -156,14 +155,14 @@ public class DeliveryManManagement extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnAdd);
-        btnAdd.setBounds(50, 310, 80, 25);
+        btnAdd.setBounds(30, 250, 80, 20);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Acc Password:");
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(10, 220, 100, 20);
+        jLabel1.setBounds(10, 160, 100, 20);
         jPanel2.add(jtfEmail);
-        jtfEmail.setBounds(120, 190, 220, 25);
+        jtfEmail.setBounds(120, 130, 220, 25);
 
         jtfName.setMaximumSize(new java.awt.Dimension(6, 18));
         jtfName.setMinimumSize(new java.awt.Dimension(6, 18));
@@ -180,9 +179,46 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Address:");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(10, 250, 90, 20);
+        jLabel3.setBounds(10, 190, 90, 20);
         jPanel2.add(jtfAddress);
-        jtfAddress.setBounds(120, 250, 220, 25);
+        jtfAddress.setBounds(120, 190, 220, 25);
+
+        BtnUpdate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        BtnUpdate.setText("Update");
+        BtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUpdateActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BtnUpdate);
+        BtnUpdate.setBounds(150, 250, 80, 20);
+
+        buttonGroupAge.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Male");
+        jPanel2.add(jRadioButton1);
+        jRadioButton1.setBounds(120, 70, 70, 23);
+
+        buttonGroupAge.add(jRadioButton2);
+        jRadioButton2.setText("Female");
+        jPanel2.add(jRadioButton2);
+        jRadioButton2.setBounds(230, 70, 70, 23);
+
+        jLabel11.setText("Enter Staff ID to search");
+
+        BtnSearch.setText("Search");
+        BtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSearchActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,20 +227,36 @@ public class DeliveryManManagement extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(191, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(168, 168, 168))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)))
-                .addGap(168, 168, 168))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtnSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addComponent(jLabel11))
+                        .addGap(212, 212, 212))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnSearch)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -221,49 +273,112 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfDeliveryAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDeliveryAreaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfDeliveryAreaActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-        String chkgen = jtfGender.getText();
-        String chkjob = jtfDeliveryArea.getText();
         String chkIC = jtfIC.getText();
         String chkphn = jtfPhone.getText();
-        String Staffphn = jtfPhone.getText();
-        
-        String DManid = DMDA.generateStaffID();
 
+        //generate new ID
         
-            if(chkIC.charAt(6) == '-' && chkIC.charAt(9) == '-'){
-                if(chkgen.charAt(0) == 'F' || chkgen.charAt(0) == 'M'){
-                    if(chkphn.substring(0,2).equals("01")){
-                    if(chkphn.indexOf('-')==3){
-                        
-                            DeliveryManDomain s = new DeliveryManDomain(DManid, jtfName.getText() , jtfDeliveryArea.getText(), jtfIC.getText(), jtfAge.getText(), jtfGender.getText(), jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText());
-                            Deliverycontrol.AddStaff(s);
-                            JOptionPane.showMessageDialog(null, "New Staff added, your staff id is " + DManid);
-                        
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Wrong phone number format, please make sure it is 01X-xxxxxxxx", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
-                    }
-                }else{
+        int newid = Integer.parseInt(DmanList.getAddEntry(DmanList.getNumberOfEntries()).getDMid().substring(1)) + 1;
+        String GenID = String.format("S%03d", newid);
+
+        String Gender;
+        if (jRadioButton1.isSelected()) {
+            Gender = "Male";
+        } else {
+            Gender = "Female";
+        }
+
+        if (chkIC.charAt(6) == '-' && chkIC.charAt(9) == '-') {
+
+            if (chkphn.substring(0, 2).equals("01")) {
+                if (chkphn.indexOf('-') == 3) {
+
+                    DeliveryManDomain test2 = new DeliveryManDomain(GenID, jtfName.getText(), jtfIC.getText(), Gender, jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText());
+                    DmanList.add(test2);
+                    JOptionPane.showMessageDialog(null, "New Staff added, your staff id is " + GenID);
+
+                } else {
                     JOptionPane.showMessageDialog(null, "Wrong phone number format, please make sure it is 01X-xxxxxxxx", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
                 }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Wrong Gender format, please enter M for male and F for female and make sure it is capital letter", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Wrong IC format, please make sure the format is XXXXXX-XX-XXXX", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
-            
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong phone number format, please make sure it is 01X-xxxxxxxx", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
             }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Wrong IC format, please make sure the format is XXXXXX-XX-XXXX", "FORMAT ERROR", JOptionPane.ERROR_MESSAGE);
+
+        }
+
 
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void jtfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNameActionPerformed
+
+    private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUpdateActionPerformed
+        boolean found = false;
+        DeliveryManDomain foundDM = null;
+        String id = jtfSearch.getText();
+        String name = jtfName.getText();
+        String ic = jtfIC.getText();
+        String phone = jtfPhone.getText();
+        String email = jtfEmail.getText();
+        String accpass = jtfAccPw.getText();
+        String address = jtfAddress.getText();
+        String gender;
+        if (jRadioButton1.isSelected()) {
+            gender = "Male";
+        } else {
+            gender = "Female";
+        }
+        foundDM=new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address);
+        for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
+            if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
+                found = true;
+                DmanList.replace(i,foundDM);
+                JOptionPane.showMessageDialog(null, "updated.");
+            }
+        }
+
+    }//GEN-LAST:event_BtnUpdateActionPerformed
+
+    private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
+
+        //serach id
+        boolean found = false;
+        DeliveryManDomain foundDM = null;
+        for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
+            if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
+                found = true;
+                foundDM = DmanList.getEntry(i);
+
+                jtfIC.setText(foundDM.getDMic());
+                jtfName.setText(foundDM.getDMname());
+                jtfPhone.setText(foundDM.getDMphone());
+                jtfEmail.setText(foundDM.getDMemail());
+                jtfAccPw.setText(foundDM.getDMaccpass());
+                jtfAddress.setText(foundDM.getDMAddress());
+                jtfSearch.setEditable(false);
+
+                if (foundDM.getDMgender().equals("Male")) {
+                    jRadioButton1.setSelected(true);
+                }else{
+                    jRadioButton2.setSelected(true);
+                }
+            }
+        }
+
+        //end search
+    }//GEN-LAST:event_BtnSearchActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        clearText();
+        jtfSearch.setEditable(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +406,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DeliveryManManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -301,27 +417,30 @@ public class DeliveryManManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnSearch;
+    private javax.swing.JButton BtnUpdate;
     private javax.swing.JButton btnAdd;
+    private javax.swing.ButtonGroup buttonGroupAge;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField jtfAccPw;
     private javax.swing.JTextField jtfAddress;
-    private javax.swing.JTextField jtfAge;
-    private javax.swing.JTextField jtfDeliveryArea;
     private javax.swing.JTextField jtfEmail;
-    private javax.swing.JTextField jtfGender;
     private javax.swing.JTextField jtfIC;
     private javax.swing.JTextField jtfName;
     private javax.swing.JTextField jtfPhone;
+    private javax.swing.JTextField jtfSearch;
     // End of variables declaration//GEN-END:variables
 }
