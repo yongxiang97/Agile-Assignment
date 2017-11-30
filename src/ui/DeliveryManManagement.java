@@ -56,7 +56,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
 
         DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium");
         DmanList.add(test1);
-        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6666", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium");
+        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6111", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium");
         DmanList.add(test2);
 
         initComponents();
