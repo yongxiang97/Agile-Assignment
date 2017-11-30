@@ -19,7 +19,7 @@ public class ViewRestaraurant extends javax.swing.JFrame {
     
     private void initializeMenu() {
         menuModel= (DefaultTableModel) jTable1.getModel();
-        menuList.add(new Menu("Chicken Burger",7.50,"KFC"));  
+        menuList.add(new Menu("Chicken Burger",7.60,"KFC"));  
         menuList.add(new Menu("Chicken Burger Large",8.50,"KFC"));
 
         menuList.add(new Menu("Beef Burger",8.50,"MCD"));
