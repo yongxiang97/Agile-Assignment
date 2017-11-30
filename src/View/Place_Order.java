@@ -19,9 +19,9 @@ public class Place_Order extends javax.swing.JFrame {
     private ArrayList<Menu> DisMenu = new ArrayList<Menu>();
 DefaultComboBoxModel  dcbmMenu=new DefaultComboBoxModel<>();
 private void initializeMenu() {
-        DisMenu.add(new Menu("Chicken Burger",7.50));
-        DisMenu.add(new Menu("Beef Burger",8.50));
-        DisMenu.add(new Menu("Fish Burger",9.50));
+        DisMenu.add(new Menu("Chicken Burger",7.50,"KFC"));
+        DisMenu.add(new Menu("Beef Burger",8.50,"KFC"));
+        DisMenu.add(new Menu("Fish Burger",9.50,"MCD"));
         try{
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
@@ -78,6 +78,11 @@ public Place_Order() {
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jComboBox1.setModel(dcbmMenu);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel3.setText("Quantity :");
@@ -245,6 +250,10 @@ public Place_Order() {
         initializeMenu();
     }//GEN-LAST:event_jBtnResetActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -267,6 +276,7 @@ public Place_Order() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
