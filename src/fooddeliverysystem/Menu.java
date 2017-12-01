@@ -1,18 +1,20 @@
-
 package fooddeliverysystem;
 
 import javax.swing.JOptionPane;
-
+//import adt.*;
+import domain.domainMenu;
 
 public class Menu extends javax.swing.JFrame {
-    private String FoodName="Cheese Burger|Cheese Pizza|Chicken burger";
-    private String FoodPrice="5.00|9.00|7.00";
-    private String[] FoodNameArr=FoodName.split("[|]");
-    private String[] FoodPriceArr=FoodPrice.split("[|]");
+
+   // public static ListInterface<domainMenu> MaintainMenu = new List<>();
+    private String FoodName = "Cheese Burger|Cheese Pizza|Chicken burger";
+    private String FoodPrice = "5.00|9.00|7.00";
+    private String[] FoodNameArr = FoodName.split("[|]");
+    private String[] FoodPriceArr = FoodPrice.split("[|]");
+
     public Menu() {
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,11 +31,10 @@ public class Menu extends javax.swing.JFrame {
         JListFoodMenu = new javax.swing.JList<>();
         JTFPrice = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        JUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setSize(new java.awt.Dimension(800, 600));
 
         jPanel1.setAutoscrolls(true);
@@ -44,7 +45,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Menu");
 
-        Jadd.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Jadd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Jadd.setText("Add");
         Jadd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +77,17 @@ public class Menu extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Price(RM):");
 
+        JUpdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        JUpdate.setText("Update");
+        JUpdate.setMaximumSize(new java.awt.Dimension(67, 31));
+        JUpdate.setMinimumSize(new java.awt.Dimension(67, 31));
+        JUpdate.setPreferredSize(new java.awt.Dimension(67, 31));
+        JUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,19 +112,21 @@ public class Menu extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtfFoodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Jadd)
+                            .addComponent(jLabel3))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtfFoodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(JUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(295, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(275, 275, 275))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(Jadd)
-                        .addGap(285, 285, 285))))
+                .addContainerGap(298, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(275, 275, 275))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +151,11 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtfFoodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(Jadd)
-                .addGap(195, 195, 195))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Jadd)
+                    .addComponent(JUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(186, 186, 186))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,42 +179,73 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JaddActionPerformed
-        try{
-        String jtffoodName = jtfFoodName.getText();
-        double fdPrice = Double.parseDouble(jtfFoodPrice.getText());
-        
-        if(jtfFoodName.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Please enter new food name");
-        }else{
-            FoodName=FoodName.concat("|"+jtffoodName);
-            FoodNameArr=FoodName.split("[|]");
-            FoodPrice = FoodPrice.concat(String.format("|%.2f",fdPrice));
-            FoodPriceArr=FoodPrice.split("[|]");
-            //refresh the list
-            JListFoodMenu.setModel(new javax.swing.AbstractListModel<String>() {
-                String[] strings = FoodName.split("[|]");
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            });
-        }
-        
-        }catch(NullPointerException ex){
-            JOptionPane.showMessageDialog(null, ex.toString(),"ERROR!",JOptionPane.ERROR_MESSAGE);
-        }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(null, ex.toString(),"ERROR!",JOptionPane.ERROR_MESSAGE);
+        try {
+            String jtffoodName = jtfFoodName.getText();
+            double fdPrice = Double.parseDouble(jtfFoodPrice.getText());
+
+            if (jtfFoodName.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter new food name");
+            } else {
+                FoodName = FoodName.concat("|" + jtffoodName);
+                FoodNameArr = FoodName.split("[|]");
+                FoodPrice = FoodPrice.concat(String.format("|%.2f", fdPrice));
+                FoodPriceArr = FoodPrice.split("[|]");
+                //refresh the list
+                JListFoodMenu.setModel(new javax.swing.AbstractListModel<String>() {
+                    String[] strings = FoodName.split("[|]");
+
+                    public int getSize() {
+                        return strings.length;
+                    }
+
+                    public String getElementAt(int i) {
+                        return strings[i];
+                    }
+                });
+            }
+
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JaddActionPerformed
 
     private void JListFoodMenuValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JListFoodMenuValueChanged
         // TODO add your handling code here:
-            String food=JListFoodMenu.getSelectedValue();
-            for(int i=0;i<FoodNameArr.length;i++){
-                if(FoodNameArr[i].equalsIgnoreCase(food)){
-                    JTFPrice.setText(FoodPriceArr[i]);
-                }
+        String food = JListFoodMenu.getSelectedValue();
+        for (int i = 0; i < FoodNameArr.length; i++) {
+            if (FoodNameArr[i].equalsIgnoreCase(food)) {
+                JTFPrice.setText(FoodPriceArr[i]);
             }
+        }
         //JTFPrice.setText(JListFoodMenu.getSelectedValue());
     }//GEN-LAST:event_JListFoodMenuValueChanged
+
+    private void JUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JUpdateActionPerformed
+        // TODO add your handling code here:
+        //domainMenu dm=new domainMenu(jtfFoodName.getText(),Double.parseDouble(jtfFoodPrice.getText()));
+        //MaintainMenu.replace(JListFoodMenu.getSelectedIndex(),dm);
+        String food = JListFoodMenu.getSelectedValue();
+        boolean found = false;
+        try{
+        double newPrice=Double.parseDouble(JTFPrice.getText());
+        for (int i = 0; i < FoodNameArr.length && !found; i++) {
+            if (FoodNameArr[i].equalsIgnoreCase(food)) {
+                FoodPriceArr[i] = String.format("%.2f",newPrice);
+                FoodPrice = "";
+                found=true;
+            }
+        }
+        for (int i = 0; i < FoodPriceArr.length; i++) {
+            FoodPrice = FoodPrice.concat("|" + FoodPriceArr[i]);
+        }
+        FoodPrice = FoodPrice.substring(1);
+        JOptionPane.showMessageDialog(null, "Update successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_JUpdateActionPerformed
 
     public static void main(String args[]) {
 
@@ -212,6 +259,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JListFoodMenu;
     private javax.swing.JTextField JTFPrice;
+    private javax.swing.JButton JUpdate;
     private javax.swing.JButton Jadd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
