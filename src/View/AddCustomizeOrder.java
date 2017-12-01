@@ -1,6 +1,7 @@
 
 package View;
 
+import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -10,14 +11,14 @@ import javax.swing.JOptionPane;
 
 public class AddCustomizeOrder extends javax.swing.JFrame {
     private Double deliveryPrice =0.0;
-    public static ArrayList<String> CustomOrder  = new ArrayList<String>();
-    private ArrayList<String> HotPotPrice = new ArrayList<String>();
-    private ArrayList<String> HomeTownPrice = new ArrayList<String>();
-    private ArrayList<String> DiYiTaiPrice = new ArrayList<String>();
-    private DefaultComboBoxModel DefaultModel = new DefaultComboBoxModel(new String[]{"SELECT"});
-    private DefaultComboBoxModel HotPotModel = new DefaultComboBoxModel(new String[]{"SELECT","Extreme Spicy PanMee", "TomYam PanMee", "HakkaPanMee"});
-    private DefaultComboBoxModel HomeTownModel = new DefaultComboBoxModel(new String[]{"SELECT","Chicken Rice", "Chop Rice", "Rendang Chicken Rice"});
-    private DefaultComboBoxModel DiyiTaiModel = new DefaultComboBoxModel(new String[]{"SELECT","Pork Mince Rice", "Pork Braised Rice", "Chicken-pop Rice"});
+    public static ArrayList<String> CustomOrder  = new ArrayList<>();
+    private final ArrayList<String> HotPotPrice = new ArrayList<>();
+    private final ArrayList<String> HomeTownPrice = new ArrayList<>();
+    private final ArrayList<String> DiYiTaiPrice = new ArrayList<>();
+    private final DefaultComboBoxModel DefaultModel = new DefaultComboBoxModel(new String[]{"SELECT"});
+    private final DefaultComboBoxModel HotPotModel = new DefaultComboBoxModel(new String[]{"SELECT","Extreme Spicy PanMee", "TomYam PanMee", "HakkaPanMee"});
+    private final DefaultComboBoxModel HomeTownModel = new DefaultComboBoxModel(new String[]{"SELECT","Chicken Rice", "Chop Rice", "Rendang Chicken Rice"});
+    private final DefaultComboBoxModel DiyiTaiModel = new DefaultComboBoxModel(new String[]{"SELECT","Pork Mince Rice", "Pork Braised Rice", "Chicken-pop Rice"});
     /**
      * Creates new form AddCustomizeOrder
      */
@@ -54,8 +55,8 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         jlLoginName1 = new javax.swing.JLabel();
         jlLoginName2 = new javax.swing.JLabel();
         jlLoginName3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jlLoginName4 = new javax.swing.JLabel();
@@ -128,7 +129,7 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         jlLoginName3.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jlLoginName3.setText("Select your schedule");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECT", "HalloHotpot", "DiYiTai", "HomeTown", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT", "HalloHotpot", "DiYiTai", "HomeTown", " " }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -365,7 +366,7 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         case("HalloHotpot") : {
             for(int i = 1 ; i < HotPotModel.getSize() ; i++){
                 if(HotPotModel.getElementAt(i).toString().equals(SelectedFood)){
-                   jTextArea1.setText(HotPotPrice.get(i).toString());
+                   jTextArea1.setText(HotPotPrice.get(i));
                 }
             }
             break;
@@ -373,13 +374,13 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         case("HomeTown"):{
             for(int i = 1 ; i < HomeTownModel.getSize() ; i++){
                 if(HomeTownModel.getElementAt(i).toString().equals(SelectedFood)){
-                   jTextArea1.setText(HomeTownPrice.get(i).toString()); 
+                   jTextArea1.setText(HomeTownPrice.get(i)); 
                 }
             }
         }case("DiYiTai"):{
             for(int i = 1 ; i < DiyiTaiModel.getSize() ; i++){
                 if(DiyiTaiModel.getElementAt(i).toString().equals(SelectedFood)){
-                   jTextArea1.setText(DiYiTaiPrice.get(i).toString());
+                   jTextArea1.setText(DiYiTaiPrice.get(i));
                 }
             }
         }
@@ -408,7 +409,7 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
              jtfDaysOrdered.setText("");
              jtfTotalAmount.setText("");
              jlDeliveryFee.setText("");
-        }catch(Exception ex){
+        }catch(HeadlessException ex){
             JOptionPane.showMessageDialog(rootPane, "Please complete all the field to complete the order.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -416,20 +417,50 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Date systemDate = new Date();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String orderDate = format.format(systemDate);
+       
+        
+        try{
+             CustomOrder.add(jComboBox2.getSelectedItem().toString()+"#"
+                                          +jtfDateFrom.getText()+"#"
+                                          +jtfDaysOrdered.getText()+"#"
+                                          +jtfTotalAmount.getText()+"#"
+                                          +deliveryPrice+"#"
+                                          +orderDate);
+             jComboBox1.setSelectedIndex(0);
+             jComboBox1.setSelectedIndex(0);
+             jTextArea1.setText("");
+             jtfDateFrom.setText("");
+             jtfDaysOrdered.setText("");
+             jtfTotalAmount.setText("");
+             jlDeliveryFee.setText("");
+             this.setVisible(false);
+             new CustomizeOrderPayment().setVisible(true);
+        }catch(HeadlessException ex){
+            JOptionPane.showMessageDialog(rootPane, "Please complete all the field to complete the order.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+                
+                
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-
-         if(jComboBox1.getSelectedItem().toString().equals("HalloHotpot")){
-            jComboBox2.setModel(HotPotModel);    
-        }
-         else if(jComboBox1.getSelectedItem().toString().equals("HomeTown")){
-            jComboBox2.setModel(HomeTownModel);  
-        }else if(jComboBox1.getSelectedItem().toString().equals("DiYiTai")){
-            jComboBox2.setModel(DiyiTaiModel);  
-        }else{
-           jComboBox2.setModel(DefaultModel);   
+        switch (jComboBox1.getSelectedItem().toString()) {
+            case "HalloHotpot":
+                jComboBox2.setModel(HotPotModel);
+                break;
+            case "HomeTown":
+                jComboBox2.setModel(HomeTownModel);
+                break;
+            case "DiYiTai":
+                jComboBox2.setModel(DiyiTaiModel);
+                break;   
+            default:
+                jComboBox2.setModel(DefaultModel);
+                break;
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -445,8 +476,8 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         int totalDay = Integer.parseInt(jtfDaysOrdered.getText());
         String[] str1 = jTextArea1.getText().split("RM");
         double price = Double.parseDouble(str1[1]);
-        double deliveryPriceRate = 0.00;
-        String Rate = "";
+        double deliveryPriceRate;
+        String Rate;
         if(totalDay >= 10){
             deliveryPriceRate = 0.1;
             Rate = "(10%)";
