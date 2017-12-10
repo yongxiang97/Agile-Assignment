@@ -35,11 +35,9 @@ class JTextFieldLimit extends PlainDocument {
     }
 }
 
-
-
 public class DeliveryManManagement extends javax.swing.JFrame {
-    
-    public void clearText(){
+
+    public void clearText() {
         jtfAddress.setText("");
         jtfName.setText("");
         jtfIC.setText("");
@@ -54,9 +52,9 @@ public class DeliveryManManagement extends javax.swing.JFrame {
 
     public DeliveryManManagement() {
 
-        DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium");
+        DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium", "W");
         DmanList.add(test1);
-        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6111", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium");
+        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6111", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium", "F");
         DmanList.add(test2);
 
         initComponents();
@@ -99,6 +97,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         BtnUpdate = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        BtnDelete = new javax.swing.JButton();
         jtfSearch = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         BtnSearch = new javax.swing.JButton();
@@ -204,6 +203,16 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         jPanel2.add(jRadioButton2);
         jRadioButton2.setBounds(230, 70, 70, 23);
 
+        BtnDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        BtnDelete.setText("Delete");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BtnDelete);
+        BtnDelete.setBounds(270, 250, 80, 20);
+
         jLabel11.setText("Enter Staff ID to search");
 
         BtnSearch.setText("Search");
@@ -279,7 +288,6 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         String chkphn = jtfPhone.getText();
 
         //generate new ID
-        
         int newid = Integer.parseInt(DmanList.getAddEntry(DmanList.getNumberOfEntries()).getDMid().substring(1)) + 1;
         String GenID = String.format("S%03d", newid);
 
@@ -295,8 +303,8 @@ public class DeliveryManManagement extends javax.swing.JFrame {
             if (chkphn.substring(0, 2).equals("01")) {
                 if (chkphn.indexOf('-') == 3) {
 
-                    DeliveryManDomain test2 = new DeliveryManDomain(GenID, jtfName.getText(), jtfIC.getText(), Gender, jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText());
-                    DmanList.add(test2);
+                    DeliveryManDomain newMan = new DeliveryManDomain(GenID, jtfName.getText(), jtfIC.getText(), Gender, jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText(), "W");
+                    DmanList.add(newMan);
                     JOptionPane.showMessageDialog(null, "New Staff added, your staff id is " + GenID);
 
                 } else {
@@ -328,17 +336,18 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         String email = jtfEmail.getText();
         String accpass = jtfAccPw.getText();
         String address = jtfAddress.getText();
+        String status = "W";
         String gender;
         if (jRadioButton1.isSelected()) {
             gender = "Male";
         } else {
             gender = "Female";
         }
-        foundDM=new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address);
+        foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status);
         for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
             if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
                 found = true;
-                DmanList.replace(i,foundDM);
+                DmanList.replace(i, foundDM);
                 JOptionPane.showMessageDialog(null, "updated.");
             }
         }
@@ -355,18 +364,43 @@ public class DeliveryManManagement extends javax.swing.JFrame {
                 found = true;
                 foundDM = DmanList.getEntry(i);
 
-                jtfIC.setText(foundDM.getDMic());
-                jtfName.setText(foundDM.getDMname());
-                jtfPhone.setText(foundDM.getDMphone());
-                jtfEmail.setText(foundDM.getDMemail());
-                jtfAccPw.setText(foundDM.getDMaccpass());
-                jtfAddress.setText(foundDM.getDMAddress());
-                jtfSearch.setEditable(false);
+                if (found = false) {
+                    JOptionPane.showMessageDialog(null, "Staff " + foundDM.getDMid() + " doesn't exist", "error", JOptionPane.ERROR_MESSAGE);
+                }
 
-                if (foundDM.getDMgender().equals("Male")) {
-                    jRadioButton1.setSelected(true);
-                }else{
-                    jRadioButton2.setSelected(true);
+                if (foundDM.getDMStatus() == "W") {
+                    jtfIC.setText(foundDM.getDMic());
+                    jtfName.setText(foundDM.getDMname());
+                    jtfPhone.setText(foundDM.getDMphone());
+                    jtfEmail.setText(foundDM.getDMemail());
+                    jtfAccPw.setText(foundDM.getDMaccpass());
+                    jtfAddress.setText(foundDM.getDMAddress());
+                    jtfSearch.setEditable(false);
+
+                    if (foundDM.getDMgender().equals("Male")) {
+                        jRadioButton1.setSelected(true);
+                    } else {
+                        jRadioButton2.setSelected(true);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Staff " + foundDM.getDMid() + " deleted and no longer in the company", "error", JOptionPane.ERROR_MESSAGE);
+                    int response = JOptionPane.showConfirmDialog(null, "Do you want to display " + foundDM.getDMid() + " info ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (response == JOptionPane.YES_OPTION) {
+                        jtfIC.setText(foundDM.getDMic());
+                        jtfName.setText(foundDM.getDMname());
+                        jtfPhone.setText(foundDM.getDMphone());
+                        jtfEmail.setText(foundDM.getDMemail());
+                        jtfAccPw.setText(foundDM.getDMaccpass());
+                        jtfAddress.setText(foundDM.getDMAddress());
+                        jtfSearch.setEditable(false);
+
+                        if (foundDM.getDMgender().equals("Male")) {
+                            jRadioButton1.setSelected(true);
+                        } else {
+                            jRadioButton2.setSelected(true);
+                        }
+                    }
                 }
             }
         }
@@ -379,6 +413,36 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         clearText();
         jtfSearch.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        boolean found = false;
+        DeliveryManDomain foundDM = null;
+        String id = jtfSearch.getText();
+        String name = jtfName.getText();
+        String ic = jtfIC.getText();
+        String phone = jtfPhone.getText();
+        String email = jtfEmail.getText();
+        String accpass = jtfAccPw.getText();
+        String address = jtfAddress.getText();
+        String status = "F";
+        String gender;
+        if (jRadioButton1.isSelected()) {
+            gender = "Male";
+        } else {
+            gender = "Female";
+        }
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete? " + jtfSearch.getText() + " info ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status);
+            for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
+                if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
+                    found = true;
+                    DmanList.replace(i, foundDM);
+                    JOptionPane.showMessageDialog(null, "Deleted Successfully.");
+                }
+            }
+        }
+    }//GEN-LAST:event_BtnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,6 +481,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnDelete;
     private javax.swing.JButton BtnSearch;
     private javax.swing.JButton BtnUpdate;
     private javax.swing.JButton btnAdd;
