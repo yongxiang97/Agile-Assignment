@@ -1,51 +1,40 @@
-
 package View;
 
 import javax.swing.DefaultComboBoxModel;
 import Model.*;
 import ADT.*;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
-
 public class ViewRestaraurant extends javax.swing.JFrame {
-    public static LinkInterface<Menu> menuList = new List<>();
-    public String[] resAFood = {"A","B"};
-    public String[] resAPrice = {"12.00","6.00"};
-   
-    DefaultComboBoxModel  rt = new DefaultComboBoxModel<>();
-    DefaultTableModel menuModel =null;
-    String[] restName;
-    
-    private void initializeMenu() {
-        menuModel= (DefaultTableModel) jTable1.getModel();
-        menuList.add(new Menu("Chicken Burger",7.60,"KFC"));  
-        menuList.add(new Menu("Chicken Burger Large",8.50,"KFC"));
 
-        menuList.add(new Menu("Beef Burger",8.50,"MCD"));
-        menuList.add(new Menu("Fish Burger",9.50,"MCD"));
+    public static LinkInterface<Menu> menuList = new List<>();
+    public static LinkInterface<Restaurant> ResList = new List<>();
+
+    DefaultComboBoxModel rt = new DefaultComboBoxModel<>();
+    DefaultTableModel menuModel = null;
+
+    private void initializeMenu() {
+        menuModel = (DefaultTableModel) jTable1.getModel();
+        menuList.add(new Menu("Chicken Burger", 7.60, "KFC"));
+        menuList.add(new Menu("Chicken Burger Large", 8.50, "KFC"));
+
+        menuList.add(new Menu("Beef Burger", 8.50, "MCD"));
+        menuList.add(new Menu("Fish Burger", 9.50, "MCD"));
         // initialize combobox name
-        String temp="|"; 
-        for(int i=0;i<menuList.getNumberOfEntries();i++){
-            if(temp.indexOf(menuList.getEntry(i).getRestName())==-1){
-                temp+=menuList.getEntry(i).getRestName()+"|";
-            }
+
+        ResList.add(new Restaurant("KFC", "1300 1313 11", "123,setapak, 11113"));
+        ResList.add(new Restaurant("MCD", "1300 1313 00", "456,sungai long, 11411"));
+
+        for (int i = 0; i < ResList.getNumberOfEntries(); i++) {
+            rt.addElement(ResList.getEntry(i).getRestaurantName());
         }
-        temp=temp.substring(1);
-        restName=temp.split("[|]");
-        
-        for(int i = 0 ; i < restName.length ; i++){
-            rt.addElement(restName[i]);
-        }
-        
-    
+
     }
-    
+
     public ViewRestaraurant() {
         initComponents();
-        
         initializeMenu();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -59,6 +48,11 @@ public class ViewRestaraurant extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        jblResDetail = new javax.swing.JLabel();
+        jblPn = new javax.swing.JLabel();
+        jblAdd = new javax.swing.JLabel();
+        jblDisplayPn = new javax.swing.JLabel();
+        jblDisplayAdd = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,38 +83,76 @@ public class ViewRestaraurant extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton2.setText("Next");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jblResDetail.setText("Detail");
+
+        jblPn.setText("Phone Number");
+
+        jblAdd.setText("Address");
+
+        jblDisplayPn.setPreferredSize(new java.awt.Dimension(400, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 540, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jblResDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jblPn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jblAdd)
+                                .addGap(48, 48, 48)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jblDisplayPn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jblDisplayAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jblResDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jblPn)
+                    .addComponent(jblDisplayPn, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jblDisplayAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jblAdd)))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,7 +160,7 @@ public class ViewRestaraurant extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(308, Short.MAX_VALUE)
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(298, 298, 298))
             .addGroup(layout.createSequentialGroup()
@@ -153,21 +185,42 @@ public class ViewRestaraurant extends javax.swing.JFrame {
         // TODO add your handling code here:
         //get selected restaurant
         menuModel.setRowCount(0);
-        String onloadRest = jComboBox1.getSelectedItem().toString() ;
-        for(int j=0 ; j<menuList.getNumberOfEntries();j++){ 
-                if(onloadRest.equals(menuList.getEntry(j).getRestName())){
-                    
-                    menuModel.addRow(new Object[]
-            {   menuList.getEntry(j).getFoodName(),
-                menuList.getEntry(j).getFoodPrice(),
-            });
-                    
-                } 
+        String onloadRest = jComboBox1.getSelectedItem().toString();
+        for (int j = 0; j < menuList.getNumberOfEntries(); j++) {
+            if (onloadRest.equals(menuList.getEntry(j).getRestName())) {
+                menuModel.addRow(new Object[]{menuList.getEntry(j).getFoodName(),
+                    menuList.getEntry(j).getFoodPrice()});
+            }
+        }
+        for (int j = 0; j < ResList.getNumberOfEntries(); j++) {
+            if (onloadRest.equals(ResList.getEntry(j).getRestaurantName())) {
+                jblDisplayPn.setText(ResList.getEntry(j).getPhoneNum());
+                jblDisplayAdd.setText(ResList.getEntry(j).getAddress());
+            }
         }
         jTable1.setModel(menuModel);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Restaurant res = null;
+        String onloadRest = jComboBox1.getSelectedItem().toString();
+        for (int j = 0; j < ResList.getNumberOfEntries(); j++) {
+            if (onloadRest.equals(ResList.getEntry(j).getRestaurantName())) {
+                res = ResList.getEntry(j);
+            }
+        }
+        LinkInterface<Menu> newMenu = new List<>();
+        for (int j = 0; j < menuList.getNumberOfEntries(); j++) {
+            if (res.getRestaurantName().equals(menuList.getEntry(j).getRestName())) {
+                newMenu.add(menuList.getEntry(j));
+            }
+        }
+
+        this.dispose();
+        new Place_Order(res,newMenu).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,6 +248,8 @@ public class ViewRestaraurant extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -212,5 +267,10 @@ public class ViewRestaraurant extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jblAdd;
+    private javax.swing.JLabel jblDisplayAdd;
+    private javax.swing.JLabel jblDisplayPn;
+    private javax.swing.JLabel jblPn;
+    private javax.swing.JLabel jblResDetail;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,9 +5,9 @@
  */
 package View;
 
+import ADT.LinkInterface;
 import Model.*;
-import java.awt.List;
-import java.util.ArrayList;
+import ADT.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -15,26 +15,52 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class Place_Order extends javax.swing.JFrame {
-    private ArrayList<Order> CustOrder = new ArrayList<Order>();
-    private ArrayList<Menu> DisMenu = new ArrayList<Menu>();
-DefaultComboBoxModel  dcbmMenu=new DefaultComboBoxModel<>();
-private void initializeMenu() {
-        DisMenu.add(new Menu("Chicken Burger",7.50,"KFC"));
-        DisMenu.add(new Menu("Beef Burger",8.50,"KFC"));
-        DisMenu.add(new Menu("Fish Burger",9.50,"MCD"));
-        try{
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        model.setRowCount(0);
-        jSpinner1.setValue(0);
-        }catch(NullPointerException ex)
-        {
+
+    public static LinkInterface<Order> order = new List<>();
+    public static LinkInterface<Menu> tempMenu = new List<>();
+    public static LinkInterface<Menu> oriMenu = new List<>();
+    public static Restaurant res;
+    DefaultComboBoxModel dcbmMenu = new DefaultComboBoxModel<>();
+
+    private void initializeMenu() {
+        tempMenu.clear();
+        for (int i = 0; i < oriMenu.getNumberOfEntries(); i++) {
+            tempMenu.add(oriMenu.getEntry(i));
         }
-        for(int i = 0; i < DisMenu.size(); i++)
-            dcbmMenu.addElement(DisMenu.get(i).getFoodName());
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            model.setRowCount(0);
+            jSpinner1.setValue(0);
+            dcbmMenu.removeAllElements();
+        } catch (NullPointerException ex) {
+        }
+        for (int i = 0; i < tempMenu.getNumberOfEntries(); i++) {
+            dcbmMenu.addElement(tempMenu.getEntry(i).getFoodName());
+        }
     }
 
-public Place_Order() {
+    public Place_Order() {
         initializeMenu();
+        initComponents();
+    }
+
+    public Place_Order(Restaurant res, LinkInterface<Menu> newMenu) {
+        tempMenu.clear();
+        this.res = res;
+        this.oriMenu = newMenu;
+
+        for (int i = 0; i < oriMenu.getNumberOfEntries(); i++) {
+            tempMenu.add(oriMenu.getEntry(i));
+        }
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            model.setRowCount(0);
+            jSpinner1.setValue(0);
+        } catch (NullPointerException ex) {
+        }
+        for (int i = 0; i < tempMenu.getNumberOfEntries(); i++) {
+            dcbmMenu.addElement(tempMenu.getEntry(i).getFoodName());
+        }
         initComponents();
     }
 
@@ -50,13 +76,17 @@ public Place_Order() {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnConfirm = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jBtnReset = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jblAmt = new javax.swing.JLabel();
         jblTotalPrice = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        btnNxt = new javax.swing.JButton();
+        jblLocation = new javax.swing.JLabel();
+        jtxLocation = new javax.swing.JTextField();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,11 +120,11 @@ public Place_Order() {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel2.setText("Food Name :");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton1.setText("Confirm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirm.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnConfirm.setText("Confirm");
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConfirmActionPerformed(evt);
             }
         });
 
@@ -106,13 +136,14 @@ public Place_Order() {
                 "Food Name", "Price", "Quantity", "SubTotal"
             }
         ));
+        jTable3.setEnabled(false);
         jScrollPane3.setViewportView(jTable3);
 
-        jBtnReset.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jBtnReset.setText("Reset");
-        jBtnReset.addActionListener(new java.awt.event.ActionListener() {
+        btnReset.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnResetActionPerformed(evt);
+                btnResetActionPerformed(evt);
             }
         });
 
@@ -122,33 +153,66 @@ public Place_Order() {
         jblTotalPrice.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jblTotalPrice.setText(String.format("%5.2f",0.00));
 
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        btnNxt.setText("Next");
+        btnNxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNxtActionPerformed(evt);
+            }
+        });
+
+        jblLocation.setText("Delivery Location");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(jblAmt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jblTotalPrice)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
-                .addComponent(jBtnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(jblAmt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jblTotalPrice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jblLocation)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jblLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(136, 136, 136)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jblAmt)
-                    .addComponent(jblTotalPrice))
+                    .addComponent(jblTotalPrice)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73))
         );
 
@@ -172,7 +236,7 @@ public Place_Order() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btnConfirm))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -187,7 +251,7 @@ public Place_Order() {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
@@ -200,7 +264,7 @@ public Place_Order() {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,46 +277,80 @@ public Place_Order() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        String item=jComboBox1.getSelectedItem().toString();
-        int findMenu=-1;
-        double totalprice=0;
-        double subprice=0;
-        for(int i=0;i<DisMenu.size();i++)
-            if(item.equalsIgnoreCase(DisMenu.get(i).getFoodName()))
-                findMenu=i;
-        
-        if(findMenu!=-1&&(int)jSpinner1.getValue()>0){
-            totalprice=Double.parseDouble(jblTotalPrice.getText());
-            subprice=(DisMenu.get(findMenu).getFoodPrice()*Double.parseDouble(jSpinner1.getValue().toString()));
-            totalprice+=subprice;
-            model.addRow(new Object[]
-            {   DisMenu.get(findMenu).getFoodName(),
-                String.format("RM %5.2f",DisMenu.get(findMenu).getFoodPrice()),
+        String item = jComboBox1.getSelectedItem().toString();
+        int findMenu = -1;
+        double totalprice = 0;
+        double subprice = 0;
+        for (int i = 0; i < tempMenu.getNumberOfEntries(); i++) {
+            if (item.equalsIgnoreCase(tempMenu.getEntry(i).getFoodName())) {
+                findMenu = i;
+            }
+        }
+
+        if (findMenu != -1 && (int) jSpinner1.getValue() > 0) {
+            totalprice = Double.parseDouble(jblTotalPrice.getText());
+            subprice = (tempMenu.getEntry(findMenu).getFoodPrice() * Double.parseDouble(jSpinner1.getValue().toString()));
+            totalprice += subprice;
+            model.addRow(new Object[]{tempMenu.getEntry(findMenu).getFoodName(),
+                String.format("RM %5.2f", tempMenu.getEntry(findMenu).getFoodPrice()),
                 jSpinner1.getValue().toString(),
-                String.format("RM %5.2f",subprice)
+                String.format("RM %5.2f", subprice)
             });
             jComboBox1.removeAllItems();
-            jblTotalPrice.setText(String.format("%5.2f",totalprice));
-            DisMenu.remove(findMenu);
-            
-        for(int i = 0; i < DisMenu.size(); i++)
-            dcbmMenu.addElement(DisMenu.get(i).getFoodName());
-        }
-        else
-            JOptionPane.showMessageDialog(null, "Please add quantity to the selected food.","Invalid amount",JOptionPane.ERROR_MESSAGE);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+            jblTotalPrice.setText(String.format("%5.2f", totalprice));
+            tempMenu.remove(findMenu + 1);
 
-    private void jBtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnResetActionPerformed
-        // TODO add your handling code here:
+            for (int i = 0; i < tempMenu.getNumberOfEntries(); i++) {
+                dcbmMenu.addElement(tempMenu.getEntry(i).getFoodName());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please add quantity to the selected food.", "Invalid amount", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:s
         initializeMenu();
-    }//GEN-LAST:event_jBtnResetActionPerformed
+    }//GEN-LAST:event_btnResetActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnNxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNxtActionPerformed
+        // TODO add your handling code here:
+        String Add = jtxLocation.getText();
+        double total = Double.parseDouble(jblTotalPrice.getText());
+        if (Add.equals("")) {
+            JOptionPane.showMessageDialog(null, "Plese Enter Delivery Address", "Address", JOptionPane.ERROR_MESSAGE);
+        } else {
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            String foodprice;
+            String subtotal;
+            int quan;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                foodprice = model.getValueAt(i, 1).toString().substring(3);
+                quan = Integer.parseInt(model.getValueAt(i, 2).toString());
+                subtotal=model.getValueAt(i, 3).toString().substring(3);
+                
+                order.add(new Order(model.getValueAt(i, 0).toString(),
+                        Double.parseDouble(foodprice), quan,
+                        Double.parseDouble(subtotal),
+                        Add, total));
+            }
+
+            this.dispose();
+            new ConfirmOrder(order, res).setVisible(true);
+        }
+    }//GEN-LAST:event_btnNxtActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -278,6 +376,8 @@ public Place_Order() {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -287,9 +387,15 @@ public Place_Order() {
         });
     }
 
+    public Place_Order(Restaurant res) {
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnReset;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnConfirm;
+    private javax.swing.JButton btnNxt;
+    private javax.swing.JButton btnReset;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -302,6 +408,8 @@ public Place_Order() {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JLabel jblAmt;
+    private javax.swing.JLabel jblLocation;
     private javax.swing.JLabel jblTotalPrice;
+    private javax.swing.JTextField jtxLocation;
     // End of variables declaration//GEN-END:variables
 }
