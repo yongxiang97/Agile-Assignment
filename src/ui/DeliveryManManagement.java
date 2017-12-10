@@ -52,9 +52,9 @@ public class DeliveryManManagement extends javax.swing.JFrame {
 
     public DeliveryManManagement() {
 
-        DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium", "W");
+        DeliveryManDomain test1 = new DeliveryManDomain("S001", "hamato", "970713-11-1414", "Male", "016-4531458", "asd@asd.com", "12312", "6-1-1 PV 12 Condominium", "W", "Delivering", "A001");
         DmanList.add(test1);
-        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6111", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium", "F");
+        DeliveryManDomain test2 = new DeliveryManDomain("S002", "Lily", "970713-11-6111", "Female", "016-4222235", "lily@gmail.com", "zzxczxczxc", "4-5-A pv 15 Condominium", "F", "Delivering", "A001");
         DmanList.add(test2);
 
         initComponents();
@@ -303,7 +303,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
             if (chkphn.substring(0, 2).equals("01")) {
                 if (chkphn.indexOf('-') == 3) {
 
-                    DeliveryManDomain newMan = new DeliveryManDomain(GenID, jtfName.getText(), jtfIC.getText(), Gender, jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText(), "W");
+                    DeliveryManDomain newMan = new DeliveryManDomain(GenID, jtfName.getText(), jtfIC.getText(), Gender, jtfPhone.getText(), jtfEmail.getText(), jtfAccPw.getText(), jtfAddress.getText(), "W", "Delivering", "A001");
                     DmanList.add(newMan);
                     JOptionPane.showMessageDialog(null, "New Staff added, your staff id is " + GenID);
 
@@ -337,13 +337,15 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         String accpass = jtfAccPw.getText();
         String address = jtfAddress.getText();
         String status = "W";
+        String delivering = "delivering";
+        String orderID = "A001";
         String gender;
         if (jRadioButton1.isSelected()) {
             gender = "Male";
         } else {
             gender = "Female";
         }
-        foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status);
+        foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status, delivering, orderID);
         for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
             if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
                 found = true;
@@ -356,7 +358,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
 
     private void BtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSearchActionPerformed
 
-        //serach id
+        //search id
         boolean found = false;
         DeliveryManDomain foundDM = null;
         for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
@@ -375,6 +377,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
                     jtfEmail.setText(foundDM.getDMemail());
                     jtfAccPw.setText(foundDM.getDMaccpass());
                     jtfAddress.setText(foundDM.getDMAddress());
+                    System.out.println(foundDM.getDMdelivery());
                     jtfSearch.setEditable(false);
 
                     if (foundDM.getDMgender().equals("Male")) {
@@ -425,7 +428,9 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         String accpass = jtfAccPw.getText();
         String address = jtfAddress.getText();
         String status = "F";
+        String delivering = "delivering";
         String gender;
+        String orderID = "A001";
         if (jRadioButton1.isSelected()) {
             gender = "Male";
         } else {
@@ -433,7 +438,7 @@ public class DeliveryManManagement extends javax.swing.JFrame {
         }
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete? " + jtfSearch.getText() + " info ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
-            foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status);
+            foundDM = new DeliveryManDomain(id, name, ic, gender, phone, email, accpass, address, status, delivering, orderID);
             for (int i = 0; i < DmanList.getNumberOfEntries() && !found; i++) {
                 if (jtfSearch.getText().equals(DmanList.getEntry(i).getDMid())) {
                     found = true;

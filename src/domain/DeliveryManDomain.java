@@ -13,6 +13,8 @@ public class DeliveryManDomain implements Serializable{
     private String DMaccpass;
     private String DMAddress;
     private String DMStatus;
+    private String DMdelivery;
+    private String DMOrderID;
     
     public DeliveryManDomain(){
         
@@ -22,7 +24,7 @@ public class DeliveryManDomain implements Serializable{
         this.DMid = DMid;
     }
     
-    public DeliveryManDomain(String DMid, String DMname, String DMic, String DMgender, String DMphone, String DMemail, String DMaccpass, String DMAddress, String DMStatus){
+    public DeliveryManDomain(String DMid, String DMname, String DMic, String DMgender, String DMphone, String DMemail, String DMaccpass, String DMAddress, String DMStatus, String DMdelivery, String DMorderID){
         this.DMid = DMid;
         this.DMname = DMname;
         this.DMic = DMic;
@@ -32,6 +34,16 @@ public class DeliveryManDomain implements Serializable{
         this.DMaccpass = DMaccpass;
         this.DMAddress = DMAddress;
         this.DMStatus = DMStatus;
+        this.DMdelivery = DMdelivery;
+        this.DMOrderID = DMorderID;
+    }
+
+    public String getDMOrderID() {
+        return DMOrderID;
+    }
+
+    public String getDMdelivery() {
+        return DMdelivery;
     }
 
     public String getDMStatus() {
@@ -71,6 +83,10 @@ public class DeliveryManDomain implements Serializable{
     public String getDMAddress() {
         return DMAddress;
     }
+
+    public void setDMOrderID(String DMOrderID) {
+        this.DMOrderID = DMOrderID;
+    }
     
     public void setDMStatus(String DMStatus) {
         this.DMStatus = DMStatus;
@@ -87,6 +103,10 @@ public class DeliveryManDomain implements Serializable{
 
     public void setDMic(String DMic) {
         this.DMic = DMic;
+    }
+
+    public void setDMdelivery(String DMdelivery) {
+        this.DMdelivery = DMdelivery;
     }
 
 
