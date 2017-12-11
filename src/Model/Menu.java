@@ -7,6 +7,14 @@ public class Menu {
     private double FoodPrice;
     private String RestName;
 
+    public Menu(String FoodName, double FoodPrice, String RestName) {
+        this.FoodName = FoodName;
+        this.FoodPrice = FoodPrice;
+        this.RestName = RestName;
+    }
+    public Menu(){}
+
+    
     public String getRestName() {
         return RestName;
     }
@@ -15,13 +23,6 @@ public class Menu {
         this.RestName = RestName;
     }
     
-    public Menu(){}
-
-    public Menu(String FoodName, double FoodPrice, String RestName) {
-        this.FoodName = FoodName;
-        this.FoodPrice = FoodPrice;
-        this.RestName = RestName;
-    }
 
     public String getFoodName() {
         return FoodName;
