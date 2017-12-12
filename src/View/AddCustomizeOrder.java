@@ -1,6 +1,7 @@
 
 package View;
 
+import Model.CustomOrder;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class AddCustomizeOrder extends javax.swing.JFrame {
     private Double deliveryPrice =0.0;
-    public static ArrayList<String> CustomOrder  = new ArrayList<>();
+    public static ArrayList<CustomOrder> CustomOrder  = new ArrayList<>();
     private final ArrayList<String> HotPotPrice = new ArrayList<>();
     private final ArrayList<String> HomeTownPrice = new ArrayList<>();
     private final ArrayList<String> DiYiTaiPrice = new ArrayList<>();
@@ -75,9 +76,7 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jlMenuName.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jlMenuName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -395,12 +394,14 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
        
         
         try{
-             CustomOrder.add(jComboBox2.getSelectedItem().toString()+"#"
-                                          +jtfDateFrom.getText()+"#"
-                                          +jtfDaysOrdered.getText()+"#"
-                                          +jtfTotalAmount.getText()+"#"
-                                          +deliveryPrice+"#"
-                                          +orderDate);
+             CustomOrder.add( new CustomOrder("CO0001",
+                                          orderDate,
+                                          jComboBox2.getSelectedItem().toString(),
+                                          jtfDateFrom.getText(),
+                                          Integer.parseInt(jtfDaysOrdered.getText()),
+                                          Double.parseDouble(jtfTotalAmount.getText().substring(3)),
+                                          "Unpaid"
+                                          ));
              JOptionPane.showMessageDialog(null,"Order create successfully in "+systemDate+", you can view your scheduled order in 'View Scheduled Order'");
              jComboBox1.setSelectedIndex(0);
              jComboBox1.setSelectedIndex(0);
@@ -409,7 +410,7 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
              jtfDaysOrdered.setText("");
              jtfTotalAmount.setText("");
              jlDeliveryFee.setText("");
-        }catch(HeadlessException ex){
+        }catch(HeadlessException | NumberFormatException ex){
             JOptionPane.showMessageDialog(rootPane, "Please complete all the field to complete the order.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -423,12 +424,14 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
        
         
         try{
-             CustomOrder.add(jComboBox2.getSelectedItem().toString()+"#"
-                                          +jtfDateFrom.getText()+"#"
-                                          +jtfDaysOrdered.getText()+"#"
-                                          +jtfTotalAmount.getText()+"#"
-                                          +deliveryPrice+"#"
-                                          +orderDate);
+             CustomOrder.add( new CustomOrder("CO0001",
+                                          orderDate,
+                                          jComboBox2.getSelectedItem().toString(),
+                                          jtfDateFrom.getText(),
+                                          Integer.parseInt(jtfDaysOrdered.getText()),
+                                          Double.parseDouble(jtfTotalAmount.getText().substring(3)),
+                                          "Unpaid"
+                                          ));
              jComboBox1.setSelectedIndex(0);
              jComboBox1.setSelectedIndex(0);
              jTextArea1.setText("");
@@ -526,6 +529,36 @@ public class AddCustomizeOrder extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AddCustomizeOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

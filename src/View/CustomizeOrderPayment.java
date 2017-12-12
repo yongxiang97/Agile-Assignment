@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package View;
-import View.AddCustomizeOrder;
-import View.JPanelPayByBank;
+import Model.CustomOrder;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.DisplayMode;
@@ -19,14 +18,13 @@ import javax.swing.JPanel;
  */
 public class CustomizeOrderPayment extends javax.swing.JFrame {
 
-    ArrayList<String> OrderList = AddCustomizeOrder.CustomOrder;
-    String[] orderview = OrderList.get(0).split("#");
+    public static ArrayList<CustomOrder> OrderList = AddCustomizeOrder.CustomOrder;
     /**
      * Creates new form CustomizeOrderPayment
      */
     public CustomizeOrderPayment() {
         initComponents();
-        jlLabelTotalAmount.setText(orderview[3]);
+        jlLabelTotalAmount.setText(String.format("RM %.2f", OrderList.get(0).getTotalAmount()));
     }
 
     /**
@@ -57,9 +55,7 @@ public class CustomizeOrderPayment extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jlLabelTotalAmount.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jlLabelTotalAmount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -234,7 +230,7 @@ public class CustomizeOrderPayment extends javax.swing.JFrame {
             DisplayMessage = String.format("Issued Bank: %s\n"
                     + "Bank Account ID: %s\n"
                     + "Total Bill Amount: %s\n",
-                    bankName, paymentBy, orderview[3]);
+                    bankName, paymentBy, String.format("RM %.2f", OrderList.get(0).getTotalAmount()));
 
         } else {
             String[] compValue = jPanelPayByCreditCard.getValueToString().split("[|]");
@@ -246,11 +242,12 @@ public class CustomizeOrderPayment extends javax.swing.JFrame {
                     + "Cardholder Name: %s\n"
                     + "Card No.: %s\n"
                     + "Total Bill Amount: %s\n",
-                    bankName, paymentBy, cardno, orderview[3]);
+                    bankName, paymentBy, cardno, String.format("RM %.2f",OrderList.get(0).getTotalAmount()));
         }
 
         int option = JOptionPane.showConfirmDialog(null, DisplayMessage,"Confirm Order" , JOptionPane.YES_NO_OPTION);
         if(option == 0 ){
+            OrderList.get(0).setPayStatus("Paid");
             JOptionPane.showMessageDialog(null,"Payment completed! You can view your scheduled order in 'View Scheduled Order","Payment Complete", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
             new CustomizeOrderMainMenu().setVisible(true); 
@@ -303,6 +300,13 @@ public class CustomizeOrderPayment extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CustomizeOrderPayment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
