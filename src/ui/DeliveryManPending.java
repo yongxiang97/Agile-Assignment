@@ -94,6 +94,8 @@ public class DeliveryManPending extends javax.swing.JFrame {
     private void RetrieveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetrieveActionPerformed
         displayList.append("Name \t\t");
         displayList.append("Order ID \n");
+        displayList.append("_______ \t\t");
+        displayList.append("__________ \n");
         String del = "Delivering";
 
         DeliveryManDomain foundDM = null;
